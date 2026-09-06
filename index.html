@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bubbles &amp; Bites — Catering</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --teal:#51A8B1;
+    --teal-deep:#3E8A93;
+    --mint:#CCE7D4;
+    --coral:#F06277;
+    --ink:#1E3A3C;
+    --cream:#FBF9F4;
+    --max-w: 1080px;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    font-family:'Jost', sans-serif;
+    font-weight:300;
+    color:var(--ink);
+    background:var(--cream);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    font-weight:400;
+    line-height:1.08;
+    letter-spacing:0.2px;
+  }
+
+  .amp{
+    font-style:italic;
+    font-weight:500;
+    color:var(--coral);
+  }
+
+  a{ color:inherit; text-decoration:none; }
+
+  .wrap{
+    max-width:var(--max-w);
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  /* ---------- Nav ---------- */
+  nav{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(251,249,244,0.9);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid rgba(30,58,60,0.08);
+  }
+  nav .wrap{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    height:68px;
+  }
+  .nav-mark{
+    font-family:'Fraunces', serif;
+    font-size:1.15rem;
+    letter-spacing:0.3px;
+    display:flex;
+    align-items:center;
+  }
+  .nav-logo{
+    height:44px;
+    width:auto;
+    display:block;
+    border-radius:4px;
+  }
+  .nav-links{
+    display:flex;
+    gap:28px;
+    font-size:0.92rem;
+  }
+  .nav-links a{
+    padding:6px 2px;
+    border-bottom:1px solid transparent;
+    transition:border-color 0.2s ease;
+  }
+  .nav-links a:hover{ border-color:var(--coral); }
+  .nav-toggle-input{ display:none; }
+  .nav-toggle-btn{
+    display:none;
+    flex-direction:column;
+    justify-content:center;
+    gap:5px;
+    width:26px;
+    height:20px;
+    cursor:pointer;
+  }
+  .nav-toggle-btn .bar{
+    display:block;
+    height:2px;
+    background:var(--ink);
+    border-radius:1px;
+    transition:transform 0.2s ease, opacity 0.2s ease;
+  }
+  .nav-toggle-input:checked ~ .nav-toggle-btn .bar:nth-child(1){ transform:translateY(7px) rotate(45deg); }
+  .nav-toggle-input:checked ~ .nav-toggle-btn .bar:nth-child(2){ opacity:0; }
+  .nav-toggle-input:checked ~ .nav-toggle-btn .bar:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
+
+  @media(max-width:680px){
+    .nav-toggle-btn{ display:flex; }
+    .nav-links{
+      display:none;
+      position:absolute;
+      top:68px;
+      left:0;
+      right:0;
+      flex-direction:column;
+      gap:0;
+      background:var(--cream);
+      border-bottom:1px solid rgba(30,58,60,0.08);
+      box-shadow:0 12px 24px -12px rgba(30,58,60,0.2);
+    }
+    .nav-links a{
+      padding:16px 32px;
+      border-bottom:1px solid rgba(30,58,60,0.06);
+    }
+    .nav-toggle-input:checked ~ .nav-links{ display:flex; }
+  }
+
+  /* ---------- Hero ---------- */
+  header.hero{
+    background:linear-gradient(175deg, var(--teal) 0%, var(--teal-deep) 100%);
+    color:var(--mint);
+    padding:110px 0 130px;
+    position:relative;
+    overflow:hidden;
+  }
+  header.hero::after{
+    content:"";
+    position:absolute;
+    right:-120px; top:-120px;
+    width:340px; height:340px;
+    border-radius:50%;
+    border:1px solid rgba(204,231,212,0.25);
+  }
+  header.hero::before{
+    content:"";
+    position:absolute;
+    right:-40px; bottom:-160px;
+    width:240px; height:240px;
+    border-radius:50%;
+    border:1px solid rgba(240,98,119,0.35);
+  }
+  .hero-inner{
+    position:relative;
+    z-index:2;
+    max-width:640px;
+  }
+  .eyebrow{
+    font-size:0.95rem;
+    font-weight:500;
+    letter-spacing:0.5px;
+    color:var(--coral);
+    margin-bottom:18px;
+  }
+  .hero h1{
+    font-size:clamp(2.6rem, 7vw, 4.4rem);
+    color:var(--mint);
+  }
+  .hero h1 em{
+    font-style:italic;
+    color:var(--coral);
+  }
+  .hero p.lead{
+    margin-top:26px;
+    font-size:1.1rem;
+    max-width:460px;
+    color:rgba(251,249,244,0.92);
+  }
+  .cta-row{
+    margin-top:40px;
+    display:flex;
+    gap:18px;
+    flex-wrap:wrap;
+  }
+  .btn{
+    display:inline-block;
+    padding:14px 30px;
+    border-radius:2px;
+    font-size:0.95rem;
+    letter-spacing:0.2px;
+    transition:transform 0.18s ease, background 0.18s ease, color 0.18s ease;
+  }
+  .btn-primary{
+    background:var(--coral);
+    color:var(--cream);
+  }
+  .btn-primary:hover{ transform:translateY(-2px); }
+  .btn-ghost{
+    border:1px solid rgba(251,249,244,0.5);
+    color:var(--mint);
+  }
+  .btn-ghost:hover{ border-color:var(--mint); }
+
+  /* ---------- Section shell ---------- */
+  section{ padding:96px 0; }
+  .section-label{
+    font-size:0.85rem;
+    color:var(--teal-deep);
+    letter-spacing:0.3px;
+    margin-bottom:14px;
+  }
+  section h2{
+    font-size:clamp(1.9rem, 4vw, 2.6rem);
+    max-width:520px;
+  }
+
+  /* ---------- Über uns ---------- */
+  .about{
+    display:grid;
+    grid-template-columns:0.9fr 1.1fr;
+    gap:64px;
+    align-items:center;
+  }
+  .about-visual{
+    background:var(--mint);
+    border-radius:2px;
+    aspect-ratio:4/5;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+  }
+  .about-visual svg{ width:58%; height:58%; }
+  .about-text p{ margin-top:18px; max-width:480px; color:rgba(30,58,60,0.85); }
+  @media(max-width:820px){
+    .about{ grid-template-columns:1fr; }
+    .about-visual{ aspect-ratio:16/9; }
+  }
+
+  /* ---------- Angebot ---------- */
+  .angebot{ background:var(--mint); }
+  .angebot-grid{
+    margin-top:52px;
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:1px;
+    background:rgba(30,58,60,0.15);
+    border:1px solid rgba(30,58,60,0.15);
+  }
+  .angebot-card{
+    background:var(--mint);
+    padding:40px 32px;
+  }
+  .angebot-card .icon{ width:40px; height:40px; margin-bottom:22px; }
+  .angebot-card h3{
+    font-size:1.3rem;
+    margin-bottom:12px;
+  }
+  .angebot-card p{
+    font-size:0.95rem;
+    color:rgba(30,58,60,0.8);
+  }
+  @media(max-width:820px){
+    .angebot-grid{ grid-template-columns:1fr; }
+  }
+
+  /* ---------- Impressionen ---------- */
+  .gallery-grid{
+    margin-top:52px;
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:24px;
+  }
+  .gallery-tile{
+    aspect-ratio:3/4;
+    border:1px solid rgba(30,58,60,0.15);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+  }
+  .gallery-tile svg{ width:44%; height:44%; }
+  .gallery-tile:nth-child(1){ background:var(--teal); }
+  .gallery-tile:nth-child(2){ background:var(--cream); }
+  .gallery-tile:nth-child(3){ background:var(--coral); }
+  .gallery-note{
+    margin-top:22px;
+    font-size:0.85rem;
+    color:rgba(30,58,60,0.55);
+  }
+  @media(max-width:680px){
+    .gallery-grid{ grid-template-columns:1fr 1fr; }
+    .gallery-tile:nth-child(3){ display:none; }
+  }
+
+  /* ---------- Kontakt ---------- */
+  .kontakt{
+    background:linear-gradient(175deg, var(--teal-deep) 0%, var(--teal) 100%);
+    color:var(--mint);
+  }
+  .kontakt .section-label{ color:rgba(204,231,212,0.75); }
+  .kontakt-grid{
+    margin-top:44px;
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    gap:64px;
+  }
+  .kontakt p{ color:rgba(251,249,244,0.9); max-width:440px; }
+  .info-list{ margin-top:32px; }
+  .info-list dt{
+    font-size:0.8rem;
+    font-weight:500;
+    letter-spacing:0.3px;
+    color:var(--coral);
+    margin-top:20px;
+  }
+  .info-list dt:first-child{ margin-top:0; }
+  .info-list dd{ margin-top:4px; font-size:1.02rem; }
+  @media(max-width:820px){
+    .kontakt-grid{ grid-template-columns:1fr; gap:36px; }
+  }
+
+  /* ---------- Footer ---------- */
+  footer{
+    padding:36px 0;
+    text-align:center;
+    font-size:0.82rem;
+    color:rgba(30,58,60,0.55);
+    background:var(--cream);
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="#start" class="nav-mark"><img src="logo.jpeg" alt="Bubbles &amp; Bites" class="nav-logo"></a>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+    <div class="nav-links">
+      <a href="#ueber-uns">Über uns</a>
+      <a href="#angebot">Angebot</a>
+      <a href="#impressionen">Impressionen</a>
+      <a href="#kontakt">Kontakt</a>
+      <a href="impressum.html">Impressum</a>
+    </div>
+    <label for="nav-toggle" class="nav-toggle-btn" aria-label="Menü öffnen">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </label>
+  </div>
+</nav>
+
+<header class="hero" id="start">
+  <div class="wrap hero-inner">
+    <div class="eyebrow">Aperitivo · Drinks · Fingerfood</div>
+    <h1>Ein Wagen, der<br>sich eurem Event <em>anpasst!</em> <br>- nicht umgekehrt.</h1>
+    <p class="lead">Bubbles &amp; Bites bringt individuelles Catering zu eurem Event — von der Aperitivo-Bar über die Candy Bar bis zum feinen Fingerfood, ganz nach eurem Anlass gestaltet.</p>
+    <div class="cta-row">
+      <a href="#kontakt" class="btn btn-primary">Termin anfragen</a>
+      <a href="#angebot" class="btn btn-ghost">Unser Angebot</a>
+    </div>
+  </div>
+</header>
+
+<section id="ueber-uns">
+  <div class="wrap about">
+    <div class="about-visual">
+      <svg viewBox="0 0 120 120" fill="none" stroke="#51A8B1" stroke-width="2.2">
+        <path d="M20 90 L28 40 Q30 34 40 34 L80 34 Q90 34 92 40 L100 90 Z"/>
+        <circle cx="40" cy="94" r="7"/>
+        <circle cx="80" cy="94" r="7"/>
+        <path d="M42 34 L38 20 Q37 15 44 15 L76 15 Q83 15 82 20 L78 34"/>
+        <line x1="52" y1="34" x2="52" y2="55"/>
+        <line x1="68" y1="34" x2="68" y2="55"/>
+      </svg>
+    </div>
+    <div class="about-text">
+      <div class="section-label">Über uns</div>
+      <h2>Mobile Gastlichkeit mit Charakter</h2>
+      <p>Bubbles &amp; Bites ist ein Catering-Konzept für alle, die auf ihrer Feier keine Kompromisse eingehen wollen. Wir bringen die Aperitivo-Kultur, süße Naschereien und handgemachtes Fingerfood direkt zu euch — abgestimmt auf Gästezahl, Anlass und Geschmack.</p>
+      <p>Ob Hochzeit, Firmenfeier oder private Party: Wir stellen euch euer eigenes kleines Menü zusammen und sind mit dem Wagen mittendrin statt nur dabei.</p>
+    </div>
+  </div>
+</section>
+
+<section class="angebot" id="angebot">
+  <div class="wrap">
+    <div class="section-label">Unser Angebot</div>
+    <h2>Drei Wege, euer Event zu verwöhnen</h2>
+    <div class="angebot-grid">
+      <div class="angebot-card">
+        <svg class="icon" viewBox="0 0 40 40" fill="none" stroke="#F06277" stroke-width="1.8">
+          <path d="M12 8 L28 8 L20 22 Z"/>
+          <line x1="20" y1="22" x2="20" y2="32"/>
+          <line x1="13" y1="32" x2="27" y2="32"/>
+        </svg>
+        <h3>Aperitivo</h3>
+        <p>Prosecco, hausgemachte Cocktails und mediterrane Häppchen — die klassische italienische Aperitivo-Stunde als mobile Bar.</p>
+      </div>
+      <div class="angebot-card">
+        <svg class="icon" viewBox="0 0 40 40" fill="none" stroke="#F06277" stroke-width="1.8">
+          <rect x="13" y="14" width="14" height="12" rx="6"/>
+          <path d="M13 15 L5 20 L13 25"/>
+          <path d="M27 15 L35 20 L27 25"/>
+          <line x1="4" y1="17.5" x2="4" y2="22.5"/>
+          <line x1="36" y1="17.5" x2="36" y2="22.5"/>
+        </svg>
+        <h3>Candy Bar</h3>
+        <p>Süße Überraschungen für Hochzeiten und besondere Anlässe — liebevoll zusammengestellt und dekoriert, ganz nach eurer Farbwelt.</p>
+      </div>
+      <div class="angebot-card">
+        <svg class="icon" viewBox="0 0 40 40" fill="none" stroke="#F06277" stroke-width="1.8">
+          <line x1="4" y1="35" x2="35" y2="4"/>
+          <path d="M13 20 L19 26 L13 32 L7 26 Z"/>
+          <circle cx="26" cy="13" r="4.2"/>
+          <circle cx="26" cy="13" r="1" fill="#F06277" stroke="none"/>
+        </svg>
+        <h3>Fingerfood</h3>
+        <p>Kleine Köstlichkeiten für große Gesellschaften — herzhaft, vielseitig und für jeden Anlass individuell anpassbar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="impressionen">
+  <div class="wrap">
+    <div class="section-label">Impressionen</div>
+    <h2>Ein Vorgeschmack auf Bubbles &amp; Bites</h2>
+    <div class="gallery-grid">
+      <div class="gallery-tile">
+        <svg viewBox="0 0 60 60" fill="none" stroke="#CCE7D4" stroke-width="1.6">
+          <path d="M18 12 L42 12 L37 48 Q37 52 30 52 Q23 52 23 48 Z"/>
+          <line x1="20" y1="24" x2="40" y2="24"/>
+        </svg>
+      </div>
+      <div class="gallery-tile">
+        <svg viewBox="0 0 60 60" fill="none" stroke="#51A8B1" stroke-width="1.6">
+          <ellipse cx="30" cy="18" rx="16" ry="6"/>
+          <path d="M14 18 L18 42 Q18 48 30 48 Q42 48 42 42 L46 18"/>
+        </svg>
+      </div>
+      <div class="gallery-tile">
+        <svg viewBox="0 0 60 60" fill="none" stroke="#FBF9F4" stroke-width="1.6">
+          <circle cx="22" cy="32" r="9"/>
+          <circle cx="36" cy="22" r="6"/>
+          <circle cx="40" cy="36" r="4.5"/>
+        </svg>
+      </div>
+    </div>
+    <p class="gallery-note">Echte Fotos vom Truck und aus dem Einsatz folgen hier in Kürze.</p>
+  </div>
+</section>
+
+<section class="kontakt" id="kontakt">
+  <div class="wrap kontakt-grid">
+    <div>
+      <div class="section-label">Kontakt</div>
+      <h2 style="color:var(--mint)">Lust auf euer eigenes Event?</h2>
+      <p>Erzählt uns von eurem Anlass — Datum, Gästezahl und Wünsche — und wir erstellen euch ein individuelles Angebot für euren Bubbles &amp; Bites Auftritt.</p>
+      <div class="cta-row">
+        <a href="mailto:info@bubblesnbites.de" class="btn btn-primary">info@bubblesnbites.de</a>
+      </div>
+    </div>
+    <dl class="info-list">
+      <dt>Einsatzgebiet</dt>
+      <dd>Rhein-Neckar-Gebiet &amp; Umgebung</dd>
+      <dt>Anlässe</dt>
+      <dd>Hochzeiten, Firmenfeiern, private Events</dd>
+      <dt>Instagram</dt>
+      <dd>@bubbles.nd.bites</dd>
+    </dl>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">Bubbles &amp; Bites —  Catering · <a href="impressum.html">Impressum</a></div>
+</footer>
+
+<script>
+  document.querySelectorAll('.nav-links a').forEach(function(link){
+    link.addEventListener('click', function(){
+      document.getElementById('nav-toggle').checked = false;
+    });
+  });
+</script>
+</body>
+</html>
